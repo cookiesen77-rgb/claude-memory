@@ -143,7 +143,7 @@ npm run worker:status  # Check worker status
 
 #### API Endpoints
 
-Worker service runs on port `37779`:
+Worker service runs on port `7777`:
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -175,11 +175,11 @@ All data is stored locally in `~/.claude-memory/`:
 **Plugin not loading context?**
 1. Make sure you're in a project directory
 2. Trust the workspace when prompted
-3. Check worker: `curl http://localhost:37779/api/health`
+3. Check worker: `curl http://localhost:7777/api/health`
 
 **Worker not starting?**
 ```bash
-lsof -i :37779  # Check if port is in use
+lsof -i :7777  # Check if port is in use
 cat ~/.claude-memory/logs/worker-$(date +%Y-%m-%d).log  # View logs
 ```
 
@@ -311,7 +311,7 @@ npm run worker:status  # 检查worker状态
 
 #### API端点
 
-Worker服务运行在端口 `37779`：
+Worker服务运行在端口 `7777`：
 
 | 端点 | 方法 | 描述 |
 |------|------|------|
@@ -343,11 +343,11 @@ Worker服务运行在端口 `37779`：
 **插件没有加载上下文？**
 1. 确保您在项目目录中
 2. 当提示时信任工作区
-3. 检查worker：`curl http://localhost:37779/api/health`
+3. 检查worker：`curl http://localhost:7777/api/health`
 
 **Worker无法启动？**
 ```bash
-lsof -i :37779  # 检查端口是否被占用
+lsof -i :7777  # 检查端口是否被占用
 cat ~/.claude-memory/logs/worker-$(date +%Y-%m-%d).log  # 查看日志
 ```
 

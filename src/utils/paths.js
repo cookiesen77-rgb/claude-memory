@@ -20,7 +20,7 @@ export const LOGS_DIR = path.join(DATA_DIR, 'logs');
 
 // Default settings
 export const DEFAULT_SETTINGS = {
-  WORKER_PORT: 37779,
+  WORKER_PORT: 7777,
   WORKER_HOST: '127.0.0.1',
   CONTEXT_OBSERVATIONS: 50,
   LOG_LEVEL: 'INFO'

@@ -7,8 +7,8 @@ import { homedir } from 'os';
 import path from 'path';
 import fs from 'fs';
 
-// Default worker port (use 37779 to avoid conflict with original claude-mem)
-const DEFAULT_PORT = 37779;
+// Default worker port (use 7777 to avoid conflict with original claude-mem)
+const DEFAULT_PORT = 7777;
 
 /**
  * Get plugin directory - checks multiple possible installation locations

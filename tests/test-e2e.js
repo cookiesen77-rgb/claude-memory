@@ -13,7 +13,7 @@ const __dirname = dirname(__filename);
 
 const PLUGIN_DIR = join(homedir(), '.claude', 'plugins', 'claude-memory');
 const DATA_DIR = join(homedir(), '.claude-memory');
-const WORKER_PORT = 37779;
+const WORKER_PORT = 7777;
 
 // Helper: Wait for condition
 async function waitFor(conditionFn, timeout = 10000, interval = 200) {

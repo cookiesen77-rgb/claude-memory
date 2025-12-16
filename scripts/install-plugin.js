@@ -72,7 +72,7 @@ async function install() {
   if (!existsSync(settingsPath)) {
     console.log('  Creating default settings...');
     const defaultSettings = {
-      WORKER_PORT: 37779,
+      WORKER_PORT: 7777,
       WORKER_HOST: '127.0.0.1',
       CONTEXT_OBSERVATIONS: 50,
       LOG_LEVEL: 'INFO'
