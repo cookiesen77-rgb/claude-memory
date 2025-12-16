@@ -11,9 +11,16 @@
   Seamlessly preserve context across sessions - never lose your coding history again.
 </p>
 
+<p align="center">
+  <a href="#english">English</a> | <a href="#中文">中文</a>
+</p>
+
 ---
 
-## ✨ Features
+<a name="english"></a>
+## 🇺🇸 English
+
+### ✨ Features
 
 - **📝 Automatic Context Capture** - Records all tool usage, file modifications, and commands
 - **💾 Persistent Storage** - SQLite database stores your coding history locally
@@ -22,14 +29,14 @@
 - **📊 Token Economics** - Shows how much context is loaded and work investment
 - **🏷️ Observation Types** - Categorizes actions as bugfix, feature, refactor, discovery, etc.
 
-## 🚀 Quick Start
+### 🚀 Quick Start
 
-### Prerequisites
+#### Prerequisites
 
 - Node.js >= 18.0.0
 - Claude Code installed (`npm install -g @anthropic-ai/claude-code`)
 
-### Installation
+#### Installation
 
 ```bash
 # Clone the repository
@@ -46,19 +53,19 @@ npm run build
 npm run install-plugin
 ```
 
-### Add Local Marketplace (First Time Only)
+#### Add Local Marketplace (First Time Only)
 
 ```bash
 # Add the local marketplace to Claude Code
-claude plugin marketplace add /Users/YOUR_USERNAME/.claude/plugins/cache/local
+claude plugin marketplace add ~/.claude/plugins/cache/local
 
 # Install the plugin
 claude plugin install claude-memory@local
 ```
 
-## 📖 How It Works
+### 📖 How It Works
 
-### Architecture
+#### Architecture
 
 ```
 ┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
@@ -73,7 +80,7 @@ claude plugin install claude-memory@local
                                                  └─────────────────┘
 ```
 
-### Lifecycle Hooks
+#### Lifecycle Hooks
 
 | Hook | Trigger | Action |
 |------|---------|--------|
@@ -83,7 +90,7 @@ claude plugin install claude-memory@local
 | `Stop` | Conversation ends | Generate session summary |
 | `SessionEnd` | Claude Code exits | Cleanup resources |
 
-### Context Injection Example
+#### Context Injection Example
 
 When you start Claude Code in a project, you'll see:
 
@@ -108,84 +115,45 @@ When you start Claude Code in a project, you'll see:
 - **Completed:** Updated token refresh logic
 ```
 
-## 🛠️ Development
+### 🛠️ Development
 
-### Project Structure
+#### Project Structure
 
 ```
 claude-memory/
 ├── src/
 │   ├── hooks/           # Claude Code lifecycle hooks
-│   │   ├── context-hook.js    # SessionStart - inject context
-│   │   ├── new-hook.js        # UserPromptSubmit - record prompts
-│   │   ├── save-hook.js       # PostToolUse - capture tools
-│   │   ├── summary-hook.js    # Stop - generate summary
-│   │   ├── cleanup-hook.js    # SessionEnd - cleanup
-│   │   └── worker-utils.js    # Shared utilities
-│   ├── services/
-│   │   ├── worker-service.js  # Express API server
-│   │   ├── database.js        # SQLite operations
-│   │   └── context-generator.js # Context formatting
-│   ├── sdk/
-│   │   ├── prompts.js         # AI prompt templates
-│   │   └── parser.js          # Response parsing
-│   └── utils/
-│       ├── paths.js           # Path constants
-│       └── logger.js          # Logging utility
-├── scripts/
-│   ├── build.js              # esbuild bundler
-│   └── install-plugin.js     # Installation script
-├── tests/
-│   ├── test-all.js           # Unit tests
-│   └── test-e2e.js           # End-to-end tests
-└── plugin/                   # Built output directory
+│   ├── services/        # Worker service & database
+│   ├── sdk/             # Prompt templates & parsers
+│   └── utils/           # Shared utilities
+├── scripts/             # Build & install scripts
+├── tests/               # Unit & E2E tests
+└── plugin/              # Built output directory
 ```
 
-### Commands
+#### Commands
 
 ```bash
-# Build the plugin
-npm run build
-
-# Run unit tests
-npm run test
-
-# Run end-to-end tests
-npm run test:e2e
-
-# Run all tests
-npm run test:all
-
-# Test context injection
-npm run test:context
-
-# Worker management
-npm run worker:start
-npm run worker:stop
-npm run worker:restart
-npm run worker:status
-
-# Install to Claude Code
-npm run install-plugin
+npm run build          # Build the plugin
+npm run test           # Run unit tests
+npm run test:e2e       # Run end-to-end tests
+npm run install-plugin # Install to Claude Code
+npm run worker:status  # Check worker status
 ```
 
-### API Endpoints
+#### API Endpoints
 
-The worker service runs on port `37779` and provides:
+Worker service runs on port `37779`:
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/api/health` | GET | Health check |
-| `/api/version` | GET | Plugin version |
 | `/api/context/inject` | GET | Get context for project |
 | `/api/sessions/init` | POST | Initialize new session |
 | `/api/sessions/observations` | POST | Store observation |
-| `/api/sessions/summarize` | POST | Generate summary |
 | `/api/search` | GET | Search observations |
-| `/api/observations` | GET | List all observations |
-| `/api/projects` | GET | List all projects |
 
-## 📁 Data Storage
+### 📁 Data Storage
 
 All data is stored locally in `~/.claude-memory/`:
 
@@ -194,70 +162,218 @@ All data is stored locally in `~/.claude-memory/`:
 ├── memory.db          # SQLite database
 ├── settings.json      # Configuration
 └── logs/              # Worker logs
-    └── worker-YYYY-MM-DD.log
 ```
 
-### Configuration
-
-Edit `~/.claude-memory/settings.json`:
-
-```json
-{
-  "CLAUDE_MEM_WORKER_PORT": 37779,
-  "CLAUDE_MEM_CONTEXT_OBSERVATIONS": 50,
-  "CLAUDE_MEM_CONTEXT_FULL_COUNT": 5,
-  "CLAUDE_MEM_CONTEXT_SESSION_COUNT": 10
-}
-```
-
-## 🔒 Privacy
+### 🔒 Privacy
 
 - All data is stored **locally** on your machine
 - No data is sent to external servers
-- Use `<private>` tags to exclude sensitive content from storage
+- Use `<private>` tags to exclude sensitive content
 
-## 🐛 Troubleshooting
+### 🐛 Troubleshooting
 
-### Plugin not loading context
-
+**Plugin not loading context?**
 1. Make sure you're in a project directory
 2. Trust the workspace when prompted
-3. Check worker status: `curl http://localhost:37779/api/health`
+3. Check worker: `curl http://localhost:37779/api/health`
 
-### Worker not starting
-
+**Worker not starting?**
 ```bash
-# Check if port is in use
-lsof -i :37779
-
-# View logs
-cat ~/.claude-memory/logs/worker-$(date +%Y-%m-%d).log
+lsof -i :37779  # Check if port is in use
+cat ~/.claude-memory/logs/worker-$(date +%Y-%m-%d).log  # View logs
 ```
 
-### Database issues
+---
+
+<a name="中文"></a>
+## 🇨🇳 中文
+
+### ✨ 功能特性
+
+- **📝 自动捕获上下文** - 记录所有工具使用、文件修改和命令执行
+- **💾 持久化存储** - 使用SQLite数据库在本地存储编码历史
+- **🔄 智能上下文注入** - 在会话开始时自动注入相关历史记录
+- **🔍 全文搜索** - 搜索整个编码历史
+- **📊 Token经济** - 显示加载的上下文量和工作投入
+- **🏷️ 观察类型** - 将操作分类为bugfix、feature、refactor、discovery等
+
+### 🚀 快速开始
+
+#### 前置要求
+
+- Node.js >= 18.0.0
+- 已安装Claude Code (`npm install -g @anthropic-ai/claude-code`)
+
+#### 安装步骤
 
 ```bash
-# Check database
-sqlite3 ~/.claude-memory/memory.db ".tables"
+# 克隆仓库
+git clone https://github.com/YOUR_USERNAME/claude-memory.git
+cd claude-memory
 
-# View recent observations
-sqlite3 ~/.claude-memory/memory.db "SELECT * FROM observations ORDER BY id DESC LIMIT 5;"
+# 安装依赖
+npm install
+
+# 构建插件
+npm run build
+
+# 安装到Claude Code
+npm run install-plugin
 ```
 
-## 🤝 Contributing
+#### 添加本地市场（仅首次需要）
+
+```bash
+# 将本地市场添加到Claude Code
+claude plugin marketplace add ~/.claude/plugins/cache/local
+
+# 安装插件
+claude plugin install claude-memory@local
+```
+
+### 📖 工作原理
+
+#### 架构图
+
+```
+┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
+│   Claude Code   │────▶│    Hook脚本      │────▶│   Worker服务    │
+│                 │     │                  │     │   (Express.js)  │
+└─────────────────┘     └──────────────────┘     └────────┬────────┘
+                                                          │
+                                                          ▼
+                                                 ┌─────────────────┐
+                                                 │   SQLite数据库   │
+                                                 │ (~/.claude-memory)│
+                                                 └─────────────────┘
+```
+
+#### 生命周期钩子
+
+| 钩子 | 触发时机 | 动作 |
+|------|----------|------|
+| `SessionStart` | Claude Code启动 | 注入历史上下文 |
+| `UserPromptSubmit` | 用户发送消息 | 记录会话和提示 |
+| `PostToolUse` | 工具执行后 | 捕获工具使用作为观察 |
+| `Stop` | 对话结束 | 生成会话摘要 |
+| `SessionEnd` | Claude Code退出 | 清理资源 |
+
+#### 上下文注入示例
+
+当您在项目中启动Claude Code时，会看到：
+
+```markdown
+# [我的项目] 最近上下文
+
+📊 **上下文经济**:
+- 加载: 15个观察 (~120 tokens)
+- 工作投入: ~500 tokens用于研究、构建和决策
+
+### 周二, 12月16日
+
+| ID | 时间 | 类型 | 标题 | 文件 |
+|----|------|------|------|------|
+| #1 | 10:30 | 🔴 | 修复认证bug | src/auth.js |
+| #2 | 10:45 | 🟣 | 添加登录功能 | src/login.js |
+| #3 | 11:00 | ✅ | 更新配置 | config.json |
+
+---
+**📋 上次会话摘要**
+- **请求:** 修复认证bug
+- **完成:** 更新了token刷新逻辑
+```
+
+### 🛠️ 开发指南
+
+#### 项目结构
+
+```
+claude-memory/
+├── src/
+│   ├── hooks/           # Claude Code生命周期钩子
+│   ├── services/        # Worker服务和数据库
+│   ├── sdk/             # 提示模板和解析器
+│   └── utils/           # 共享工具
+├── scripts/             # 构建和安装脚本
+├── tests/               # 单元测试和端到端测试
+└── plugin/              # 构建输出目录
+```
+
+#### 命令
+
+```bash
+npm run build          # 构建插件
+npm run test           # 运行单元测试
+npm run test:e2e       # 运行端到端测试
+npm run install-plugin # 安装到Claude Code
+npm run worker:status  # 检查worker状态
+```
+
+#### API端点
+
+Worker服务运行在端口 `37779`：
+
+| 端点 | 方法 | 描述 |
+|------|------|------|
+| `/api/health` | GET | 健康检查 |
+| `/api/context/inject` | GET | 获取项目上下文 |
+| `/api/sessions/init` | POST | 初始化新会话 |
+| `/api/sessions/observations` | POST | 存储观察 |
+| `/api/search` | GET | 搜索观察 |
+
+### 📁 数据存储
+
+所有数据本地存储在 `~/.claude-memory/`：
+
+```
+~/.claude-memory/
+├── memory.db          # SQLite数据库
+├── settings.json      # 配置文件
+└── logs/              # Worker日志
+```
+
+### 🔒 隐私说明
+
+- 所有数据**仅存储在本地**
+- 不会向外部服务器发送任何数据
+- 使用 `<private>` 标签排除敏感内容
+
+### 🐛 故障排除
+
+**插件没有加载上下文？**
+1. 确保您在项目目录中
+2. 当提示时信任工作区
+3. 检查worker：`curl http://localhost:37779/api/health`
+
+**Worker无法启动？**
+```bash
+lsof -i :37779  # 检查端口是否被占用
+cat ~/.claude-memory/logs/worker-$(date +%Y-%m-%d).log  # 查看日志
+```
+
+---
+
+## 🤝 Contributing / 贡献
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📄 License
+欢迎贡献！请随时提交Pull Request。
+
+## 📄 License / 许可证
 
 MIT License - see [LICENSE](LICENSE) for details.
 
-## 🙏 Acknowledgments
+MIT许可证 - 详见 [LICENSE](LICENSE)。
+
+## 🙏 Acknowledgments / 致谢
 
 Inspired by [claude-mem](https://github.com/thedotmack/claude-mem) by Alex Newman.
+
+灵感来自 Alex Newman 的 [claude-mem](https://github.com/thedotmack/claude-mem)。
 
 ---
 
 <p align="center">
-  Made with ❤️ for the Claude Code community
+  Made with ❤️ for the Claude Code community<br>
+  为 Claude Code 社区用 ❤️ 打造
 </p>
