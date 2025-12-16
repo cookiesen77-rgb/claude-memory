@@ -1,0 +1,37 @@
+{
+  "name": "claude-memory",
+  "version": "1.0.0",
+  "description": "Persistent memory system for Claude Code - captures tool usage, compresses with AI, injects relevant context",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "worker:start": "node plugin/scripts/worker-service.cjs start",
+    "worker:stop": "node plugin/scripts/worker-service.cjs stop",
+    "worker:restart": "node plugin/scripts/worker-service.cjs restart",
+    "worker:status": "node plugin/scripts/worker-service.cjs status",
+    "test": "node tests/test-all.js",
+    "test:e2e": "node tests/test-e2e.js",
+    "test:all": "npm run test && npm run test:e2e",
+    "test:context": "echo '{\"session_id\":\"test-'$(date +%s)'\",\"cwd\":\"'$(pwd)'\",\"source\":\"startup\"}' | node plugin/scripts/context-hook.cjs",
+    "install-plugin": "node scripts/install-plugin.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "memory",
+    "plugin",
+    "context"
+  ],
+  "author": "Claude Memory System",
+  "license": "MIT"
+}

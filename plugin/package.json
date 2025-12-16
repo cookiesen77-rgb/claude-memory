@@ -1,0 +1,11 @@
+{
+  "name": "claude-memory-plugin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Runtime dependencies for claude-memory bundled hooks",
+  "type": "commonjs",
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
